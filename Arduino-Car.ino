@@ -1,6 +1,6 @@
 #include <Servo.h>
-#include "HCSR04/HCSR04.h"
-#include "L298N/L298N.h"
+#include "src/HCSR04/HCSR04.h"
+#include "src/L298N/L298N.h"
 
 #define GAP 25
 #define SPEED 80
