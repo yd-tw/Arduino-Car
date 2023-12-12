@@ -3,52 +3,51 @@
 #include "src/L298N/L298N.h"
 
 #define GAP 25
-#define SPEED 80
+#define SPEED 100
 
-#define IN1 5
-#define IN2 6
-#define IN3 7
-#define IN4 8
+#define IN1 3
+#define IN2 5
+#define IN3 6
+#define IN4 9
 
-#define R_TRIG 13
-#define R_ECHO 12
+#define R_TRIG 2
+#define R_ECHO A0
 #define L_TRIG 4
-#define L_ECHO 3
+#define L_ECHO A1
 
-#define S_MOTOR 0
+#define P_Servo 10
 
-Servo armServo;
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
+Servo Servo;
 
-void setup()
-{
+int leftDistance = 0;
+int rightDistance = 0;
+
+void setup() {
   Serial.begin(9600);
   left.begin();
   right.begin();
   motor.begin();
+  Servo.attach(10);
 
   delay(100);
 }
 
-void loop()
-{
-  int leftDistance = left.distance();
-  int rightDistance = right.distance();
-
-  delay(25);
+void loop() {
+  leftDistance = left.distance();
+  rightDistance = right.distance();
 
   if ((leftDistance < GAP) && (right.distance() < GAP)) {
     motor.back(SPEED);
-  }
-  else if (leftDistance < GAP) {
+  } else if (leftDistance < GAP) {
     motor.right(SPEED);
-  }
-  else if (right.distance() < GAP) {
+  } else if (right.distance() < GAP) {
     motor.left(SPEED);
-  }
-  else {
+  } else {
     motor.forward(SPEED);
   }
+
+  delay(25);
 }

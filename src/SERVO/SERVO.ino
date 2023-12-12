@@ -1,16 +1,16 @@
 #include <Servo.h>
 
-Servo switchServo;
-Servo armServo;
+Servo Servo;
 
 void setup() {
-  switchServo.attach(9);
-  armServo.attach(10);
+  Servo.attach(10);
 }
 
 void loop() {   
-  switchServo.write(150);
+  Servo.write(30);
   delay(1000);
-  switchServo.write(90);
+  Servo.write(100);
+  delay(1000);
+  Servo.write(135);
   delay(1000);
 }

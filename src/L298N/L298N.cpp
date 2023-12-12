@@ -32,18 +32,18 @@ void L298N::back(int speed)
 
 void L298N::left(int speed)
 {
-  analogWrite(_in1, 0);
-  analogWrite(_in2, 0);
-  analogWrite(_in3, 0);
-  analogWrite(_in4, speed);
-}
-
-void L298N::right(int speed)
-{
   analogWrite(_in1, speed);
   analogWrite(_in2, 0);
   analogWrite(_in3, 0);
   analogWrite(_in4, 0);
+}
+
+void L298N::right(int speed)
+{
+  analogWrite(_in1, 0);
+  analogWrite(_in2, 0);
+  analogWrite(_in3, 0);
+  analogWrite(_in4, speed);
 }
 
 void L298N::stop(int speed)

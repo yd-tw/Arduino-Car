@@ -1,7 +1,12 @@
 #include "HCSR04.h"
 
-HCSR04 left(2, A0);
-HCSR04 right(4, A1);
+#define R_TRIG 2
+#define R_ECHO A0
+#define L_TRIG 4
+#define L_ECHO A1
+
+HCSR04 left(L_TRIG, L_ECHO);
+HCSR04 right(R_TRIG, R_ECHO);
 
 void setup() {
   Serial.begin(9600);
