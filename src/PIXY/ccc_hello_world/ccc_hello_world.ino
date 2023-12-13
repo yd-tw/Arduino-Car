@@ -51,5 +51,5 @@ void loop()
       Serial.print(": ");
       pixy.ccc.blocks[i].print();
     }
-  }  
+  }
 }
