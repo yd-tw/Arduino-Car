@@ -1,9 +1,7 @@
 #include <Servo.h>
+#include <Pixy2.h>
 #include "src/HCSR04/HCSR04.h"
 #include "src/L298N/L298N.h"
-
-#define GAP 25
-#define SPEED 100
 
 #define IN1 3
 #define IN2 5
@@ -21,33 +19,74 @@ HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
 Servo Servo;
+Pixy2 pixy;
 
 int leftDistance = 0;
 int rightDistance = 0;
+int i = 0;
+int x = 0;
+int y = 0;
 
 void setup() {
   Serial.begin(9600);
   left.begin();
   right.begin();
   motor.begin();
-  Servo.attach(10);
+  pixy.init();
+  Servo.attach(A_Servo);
 
-  delay(100);
+  delay(10);
 }
 
 void loop() {
   leftDistance = left.distance();
   rightDistance = right.distance();
+  i = get();
+  x = getx(i);
+  y = gety(i);
 
-  if ((leftDistance < GAP) && (right.distance() < GAP)) {
-    motor.back(SPEED);
-  } else if (leftDistance < GAP) {
-    motor.right(SPEED);
-  } else if (right.distance() < GAP) {
-    motor.left(SPEED);
-  } else {
-    motor.forward(SPEED);
-  }
+  avoidance();
 
   delay(25);
+}
+
+void avoidance() {
+  if ((leftDistance < 25) && (right.distance() < 25)) {
+    motor.back(100);
+  }
+  else if (leftDistance < 25) {
+    motor.right(100);
+  }
+  else if (right.distance() < 25) {
+    motor.left(100);
+  }
+  else {
+    motor.forward(100);
+  }
+}
+
+int getX(int i) {
+  return pixy.ccc.blocks[i].m_x;
+}
+
+int getY(int i) {
+  return pixy.ccc.blocks[i].m_y;
+}
+
+int getKey() {
+  int key = 0;
+  int max = 0;
+  pixy.ccc.getBlocks();
+
+  if (pixy.ccc.numBlocks) {
+    for (int i = 0; i < pixy.ccc.numBlocks; i++) {
+      int a = pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height;
+      if (max < a) {
+        key = i;
+        max = a;
+      }
+    }
+  }
+
+  return key;
 }

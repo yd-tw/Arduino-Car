@@ -8,8 +8,7 @@ void setup() {
 }
 
 void loop() {
-  int i;
-  i = get();
+  int i = get();
 
   int x = getx(i);
   int y = gety(i);
@@ -43,6 +42,6 @@ int getKey() {
       }
     }
   }
-
+  
   return key;
 }
