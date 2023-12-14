@@ -3,7 +3,7 @@
 #define IN1 3
 #define IN2 5
 #define IN3 6
-#define IN4 9
+#define IN4 11
 
 L298N motor(IN1, IN2, IN3, IN4);
 

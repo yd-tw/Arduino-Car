@@ -8,14 +8,14 @@
 #define IN1 3
 #define IN2 5
 #define IN3 6
-#define IN4 9
+#define IN4 11
 
 #define R_TRIG 2
 #define R_ECHO A0
 #define L_TRIG 4
 #define L_ECHO A1
 
-#define P_Servo 10
+#define A_Servo 10
 
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);

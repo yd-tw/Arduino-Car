@@ -1,7 +1,6 @@
 #include <Pixy2.h>
-#include "PIXY.h"
 
-PIXY pixy;
+Pixy2 pixy;
 
 void setup() {
   Serial.begin(9600);
@@ -9,11 +8,11 @@ void setup() {
 }
 
 void loop() {
-  int i=0;
-  i = pixy.get();
+  int i;
+  i = get();
 
-  int x = pixy.ccc.blocks[i].m_x;
-  int y = pixy.ccc.blocks[i].m_y;
+  int x = getx(i);
+  int y = gety(i);
 
   Serial.print("x:");
   Serial.print(x);
@@ -21,4 +20,29 @@ void loop() {
   Serial.println(y);
 
   delay(250);
+}
+
+int getX(int i) {
+  return pixy.ccc.blocks[i].m_x;
+}
+int getY(int i) {
+  return pixy.ccc.blocks[i].m_y;
+}
+
+int getKey() {
+  int key = 0;
+  int max = 0;
+  pixy.ccc.getBlocks();
+
+  if (pixy.ccc.numBlocks) {
+    for (int i = 0; i < pixy.ccc.numBlocks; i++) {
+      int a = pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height;
+      if (max < a) {
+        key = i;
+        max = a;
+      }
+    }
+  }
+
+  return key;
 }
