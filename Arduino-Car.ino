@@ -41,11 +41,14 @@ void setup() {
 void loop() {
   leftDistance = left.distance();
   rightDistance = right.distance();
-  i = get();
-  x = getx(i);
-  y = gety(i);
-
   avoidance();
+
+  pixy.ccc.getBlocks();
+  if (pixy.ccc.numBlocks) {
+    i = getKey();
+    x = getX(i);
+    y = getY(i);
+  }
 
   delay(25);
 }
@@ -53,14 +56,11 @@ void loop() {
 void avoidance() {
   if ((leftDistance < 25) && (right.distance() < 25)) {
     motor.back(100);
-  }
-  else if (leftDistance < 25) {
+  } else if (leftDistance < 25) {
     motor.right(100);
-  }
-  else if (right.distance() < 25) {
+  } else if (right.distance() < 25) {
     motor.left(100);
-  }
-  else {
+  } else {
     motor.forward(100);
   }
 }
@@ -76,15 +76,12 @@ int getY(int i) {
 int getKey() {
   int key = 0;
   int max = 0;
-  pixy.ccc.getBlocks();
 
-  if (pixy.ccc.numBlocks) {
-    for (int i = 0; i < pixy.ccc.numBlocks; i++) {
-      int a = pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height;
-      if (max < a) {
-        key = i;
-        max = a;
-      }
+  for (int i = 0; i < pixy.ccc.numBlocks; i++) {
+    int a = pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height;
+    if (max < a) {
+      key = i;
+      max = a;
     }
   }
 
