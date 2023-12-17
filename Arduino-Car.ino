@@ -13,7 +13,7 @@
 #define L_TRIG 4
 #define L_ECHO A1
 
-#define A_Servo 10
+#define SERVO 10
 
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
@@ -33,7 +33,7 @@ void setup() {
   right.begin();
   motor.begin();
   pixy.init();
-  Servo.attach(A_Servo);
+  Servo.attach(SERVO);
 
   delay(10);
 }
