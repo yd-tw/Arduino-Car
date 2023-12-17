@@ -1,5 +1,5 @@
 #include <Servo.h>
-#include <Pixy2.h>
+#include "src/Pixy2/Pixy2.h"
 #include "src/HCSR04/HCSR04.h"
 #include "src/L298N/L298N.h"
 
