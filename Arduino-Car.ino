@@ -2,6 +2,7 @@
 #include "src/Pixy2/Pixy2.h"
 #include "src/HCSR04/HCSR04.h"
 #include "src/L298N/L298N.h"
+#include "src/LIMP/LIMP.h"
 
 #define IN1 3
 #define IN2 5
@@ -14,11 +15,13 @@
 #define L_ECHO A1
 
 #define SERVO 10
+#define LIGHT 13
 
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
-Servo Servo;
+Servo servo;
+LIMP limp(LIGHT);
 Pixy2 pixy;
 
 int leftDistance = 0;
@@ -33,36 +36,49 @@ void setup() {
   right.begin();
   motor.begin();
   pixy.init();
-  Servo.attach(SERVO);
+  servo.attach(SERVO);
+  limp.begin();
 
   delay(10);
 }
 
 void loop() {
-  leftDistance = left.distance();
-  rightDistance = right.distance();
-  avoidance();
-
   pixy.ccc.getBlocks();
   if (pixy.ccc.numBlocks) {
+    limp.on();
     motor.stop(0);
+
     i = getKey();
     x = getX(i);
     y = getY(i);
-    if(x<100){
-      Servo.write(135);
+
+    if (x < 100) {
+      servo.write(30);
+      delay(1000);
+      servo.write(100);
+      delay(1000);
+      servo.write(135);
+      delay(1000);
     }
+
+  } else {
+    limp.off();
+    leftDistance = left.distance();
+    rightDistance = right.distance();
+
+    motor.forward(100);
+    // avoidance();
   }
 
-  delay(25);
+  delay(50);
 }
 
 void avoidance() {
-  if ((leftDistance < 25) && (right.distance() < 25)) {
+  if ((leftDistance < 25) && (rightDistance < 25)) {
     motor.back(100);
   } else if (leftDistance < 25) {
     motor.right(100);
-  } else if (right.distance() < 25) {
+  } else if (rightDistance < 25) {
     motor.left(100);
   } else {
     motor.forward(100);

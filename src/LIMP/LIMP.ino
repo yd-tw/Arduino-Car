@@ -11,7 +11,7 @@ void setup()
 void loop()
 {
   red.on();
-  delay(1000);
+  delay(50);
   red.off();
-  delay(1000);
+  delay(50);
 }
