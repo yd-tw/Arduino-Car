@@ -2,7 +2,6 @@
 #include "src/Pixy2/Pixy2.h"
 #include "src/HCSR04/HCSR04.h"
 #include "src/L298N/L298N.h"
-#include "src/LIMP/LIMP.h"
 
 #define IN1 3
 #define IN2 5
@@ -21,7 +20,6 @@ HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
 Servo servo;
-LIMP limp(LIGHT);
 Pixy2 pixy;
 
 int leftDistance = 0;
@@ -37,7 +35,6 @@ void setup() {
   motor.begin();
   pixy.init();
   servo.attach(SERVO);
-  limp.begin();
 
   delay(10);
 }
@@ -45,7 +42,6 @@ void setup() {
 void loop() {
   pixy.ccc.getBlocks();
   if (pixy.ccc.numBlocks) {
-    limp.on();
     motor.stop(0);
 
     i = getKey();
@@ -62,12 +58,10 @@ void loop() {
     }
 
   } else {
-    limp.off();
     leftDistance = left.distance();
     rightDistance = right.distance();
 
-    motor.forward(100);
-    // avoidance();
+    avoidance();
   }
 
   delay(50);
