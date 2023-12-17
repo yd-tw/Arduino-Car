@@ -45,9 +45,13 @@ void loop() {
 
   pixy.ccc.getBlocks();
   if (pixy.ccc.numBlocks) {
+    motor.stop(0);
     i = getKey();
     x = getX(i);
     y = getY(i);
+    if(x<100){
+      Servo.write(135);
+    }
   }
 
   delay(25);
