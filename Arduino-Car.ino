@@ -13,14 +13,13 @@
 #define L_TRIG 4
 #define L_ECHO A1
 
-#define SERVO 10
+#define SERVO 9
 #define LIGHT 13
 
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
 Servo servo;
-Pixy2 pixy;
 
 int leftDistance = 0;
 int rightDistance = 0;
@@ -33,38 +32,29 @@ void setup() {
   left.begin();
   right.begin();
   motor.begin();
-  pixy.init();
   servo.attach(SERVO);
 
   delay(10);
 }
 
 void loop() {
-  pixy.ccc.getBlocks();
-  if (pixy.ccc.numBlocks) {
-    motor.stop(0);
+  Serial.print("loop: ");
 
-    i = getKey();
-    x = getX(i);
-    y = getY(i);
-
-    if (x < 100) {
-      servo.write(30);
-      delay(1000);
-      servo.write(100);
-      delay(1000);
-      servo.write(135);
-      delay(1000);
-    }
-
-  } else {
-    leftDistance = left.distance();
-    rightDistance = right.distance();
-
-    avoidance();
+  if (digitalRead(7)) {
+    servo.write(30);
+    delay(1000);
+    servo.write(100);
+    delay(1000);
+    servo.write(135);
+    delay(1000);
   }
 
+  // leftDistance = left.distance();
+  // rightDistance = right.distance();
+  // avoidance();
+
   delay(50);
+  Serial.println();
 }
 
 void avoidance() {
@@ -77,27 +67,4 @@ void avoidance() {
   } else {
     motor.forward(100);
   }
-}
-
-int getX(int i) {
-  return pixy.ccc.blocks[i].m_x;
-}
-
-int getY(int i) {
-  return pixy.ccc.blocks[i].m_y;
-}
-
-int getKey() {
-  int key = 0;
-  int max = 0;
-
-  for (int i = 0; i < pixy.ccc.numBlocks; i++) {
-    int a = pixy.ccc.blocks[i].m_width * pixy.ccc.blocks[i].m_height;
-    if (max < a) {
-      key = i;
-      max = a;
-    }
-  }
-
-  return key;
 }
