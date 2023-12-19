@@ -3,6 +3,9 @@
 #define SEE 2
 #define CATCH 3
 
+#define PIN1 8
+#define PIN2 9
+
 Pixy2 pixy;
 
 int i;
@@ -13,6 +16,8 @@ void setup() {
   Serial.begin(9600);
   pinMode(SEE, OUTPUT);
   pinMode(CATCH, OUTPUT);
+  pinMode(PIN1, OUTPUT);
+  pinMode(PIN2, OUTPUT);
   pixy.init();
 }
 
@@ -29,12 +34,29 @@ void loop() {
     Serial.print(",y:");
     Serial.println(y);
 
-    if ((80 < x) && (x < 120)) {
-      Serial.println("catch");
-      digitalWrite(CATCH, HIGH);
+    if (100 < y) {
+      //前
+      digitalWrite(PIN1, 0);
+      digitalWrite(PIN2, 0);
+    } else if (y < 20) {
+      //後
+      digitalWrite(PIN1, 0);
+      digitalWrite(PIN2, 1);
     } else {
-      digitalWrite(CATCH, LOW);
+      if (120 < x) {
+        //左
+        digitalWrite(PIN1, 1);
+        digitalWrite(PIN2, 0);
+      } else if (x < 80) {
+        //右
+        digitalWrite(PIN1, 1);
+        digitalWrite(PIN2, 1);
+      } else {
+        Serial.println("catch");
+        digitalWrite(CATCH, HIGH);
+      }
     }
+    delay(100);
 
   } else {
     Serial.println("None");

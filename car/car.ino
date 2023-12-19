@@ -18,6 +18,9 @@
 #define SEE 7
 #define CATCH 8
 
+#define PIN1 10
+#define PIN2 12
+
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
@@ -48,7 +51,7 @@ void loop() {
       servo.write(135);
       delay(1000);
     } else {
-      //修正位置
+      revise()
     }
   } else {
     leftDistance = left.distance();
@@ -75,4 +78,20 @@ void avoidance() {
   } else {
     motor.forward(100);
   }
+}
+
+void revise() {
+  int pin1 = digitalRead(PIN1);
+  int pin2 = digitalRead(PIN2);
+
+  if ((pin1 == 0) && (pin2 == 0)) {
+    motor.forward(100);
+  } else if ((pin1 == 0) && (pin2 == 1)) {
+    motor.back(100);
+  } else if ((pin1 == 1) && (pin2 == 0)) {
+    motor.left(100);
+  } else if ((pin1 == 1) && (pin2 == 1)){
+    motor.right(100);
+  }
+  delay(100);
 }
