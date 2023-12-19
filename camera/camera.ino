@@ -1,5 +1,6 @@
 #include "src/Pixy2/Pixy2.h"
 
+#define SEE 2
 #define CATCH 3
 
 Pixy2 pixy;
@@ -10,6 +11,7 @@ int y;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(SEE, OUTPUT);
   pinMode(CATCH, OUTPUT);
   pixy.init();
 }
@@ -17,6 +19,7 @@ void setup() {
 void loop() {
   pixy.ccc.getBlocks();
   if (pixy.ccc.numBlocks) {
+    digitalWrite(SEE, HIGH);
     i = getKey();
     x = getX(i);
     y = getY(i);
@@ -35,6 +38,7 @@ void loop() {
 
   } else {
     Serial.println("None");
+    digitalWrite(SEE, LOW);
   }
 
   delay(50);

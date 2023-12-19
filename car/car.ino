@@ -1,5 +1,4 @@
 #include <Servo.h>
-#include "src/Pixy2/Pixy2.h"
 #include "src/HCSR04/HCSR04.h"
 #include "src/L298N/L298N.h"
 
@@ -38,7 +37,7 @@ void setup() {
 void loop() {
   Serial.print("loop: ");
 
-  if (digitalRead(see)) {
+  if (digitalRead(SEE)) {
     motor.stop(0);
 
     if (digitalRead(CATCH)) {
@@ -54,6 +53,11 @@ void loop() {
   } else {
     leftDistance = left.distance();
     rightDistance = right.distance();
+
+    Serial.print(leftDistance);
+    Serial.print(",");
+    Serial.print(rightDistance);
+
     avoidance();
   }
 
