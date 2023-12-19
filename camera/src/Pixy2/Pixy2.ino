@@ -8,7 +8,6 @@ int y;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(3, OUTPUT);
   pixy.init();
 }
 void loop() {
@@ -25,9 +24,8 @@ void loop() {
 
     if ((80 < x) && (x < 120)) {
       Serial.println("catch");
-      digitalWrite(3, HIGH);
     } else {
-      digitalWrite(3, LOW);
+      //
     }
 
   } else {
