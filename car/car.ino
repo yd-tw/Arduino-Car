@@ -16,6 +16,9 @@
 #define SERVO 9
 #define LIGHT 13
 
+#define SEE 7
+#define CATCH 8
+
 HCSR04 left(L_TRIG, L_ECHO);
 HCSR04 right(R_TRIG, R_ECHO);
 L298N motor(IN1, IN2, IN3, IN4);
@@ -23,9 +26,6 @@ Servo servo;
 
 int leftDistance = 0;
 int rightDistance = 0;
-int i = 0;
-int x = 0;
-int y = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -33,25 +33,29 @@ void setup() {
   right.begin();
   motor.begin();
   servo.attach(SERVO);
-
-  delay(10);
 }
 
 void loop() {
   Serial.print("loop: ");
 
-  if (digitalRead(7)) {
-    servo.write(30);
-    delay(1000);
-    servo.write(100);
-    delay(1000);
-    servo.write(135);
-    delay(1000);
-  }
+  if (digitalRead(see)) {
+    motor.stop(0);
 
-  // leftDistance = left.distance();
-  // rightDistance = right.distance();
-  // avoidance();
+    if (digitalRead(CATCH)) {
+      servo.write(30);
+      delay(1000);
+      servo.write(100);
+      delay(1000);
+      servo.write(135);
+      delay(1000);
+    } else {
+      //修正位置
+    }
+  } else {
+    leftDistance = left.distance();
+    rightDistance = right.distance();
+    avoidance();
+  }
 
   delay(50);
   Serial.println();
