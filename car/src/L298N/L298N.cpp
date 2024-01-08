@@ -53,3 +53,11 @@ void L298N::stop(int speed)
   analogWrite(_in3, 0);
   analogWrite(_in4, 0);
 }
+
+void L298N::set(int leftSpeed, int rightSpeed)
+{
+  analogWrite(_in1, rightSpeed);
+  analogWrite(_in2, 0);
+  analogWrite(_in3, 0);
+  analogWrite(_in4, leftSpeed);
+}

@@ -1,17 +1,17 @@
-#include "LIMP.h"
+#include "LIGHT.h"
 
-LIMP::LIMP(int pin) {
+LIGHT::LIGHT(int pin) {
   _pin = pin;
 }
 
-void LIMP::begin() {
+void LIGHT::begin() {
   pinMode(_pin, OUTPUT);
 }
 
-void LIMP::on() {
+void LIGHT::on() {
   digitalWrite(_pin, HIGH);
 }
 
-void LIMP::off() {
+void LIGHT::off() {
   digitalWrite(_pin, LOW);
 }

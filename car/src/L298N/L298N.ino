@@ -24,4 +24,6 @@ void loop() {
   delay(1000);
   motor.stop(100);
   delay(1000);
+
+  // motor.set(100,100);
 }

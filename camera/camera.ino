@@ -31,36 +31,36 @@ void loop() {
 
     Serial.print("x:");
     Serial.print(x);
-    Serial.print(",y:");
-    Serial.println(y);
+    Serial.print(", y:");
+    Serial.print(y);
 
     if (100 < y) {
-      //前
       digitalWrite(PIN1, 0);
       digitalWrite(PIN2, 0);
+      Serial.print(", Send:right");
     } else if (y < 20) {
-      //後
       digitalWrite(PIN1, 0);
       digitalWrite(PIN2, 1);
+      Serial.print(", Send:left");
     } else {
       if (120 < x) {
-        //左
         digitalWrite(PIN1, 1);
         digitalWrite(PIN2, 0);
+        Serial.print(", Send:forward");
       } else if (x < 80) {
-        //右
         digitalWrite(PIN1, 1);
         digitalWrite(PIN2, 1);
+        Serial.print(", Send:back");
       } else {
         Serial.println("catch");
         digitalWrite(CATCH, HIGH);
+        Serial.print(", Send:catch");
       }
     }
-    delay(100);
 
   } else {
-    Serial.println("None");
     digitalWrite(SEE, LOW);
+    Serial.println("None");
   }
 
   delay(50);

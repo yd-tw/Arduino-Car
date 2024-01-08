@@ -12,6 +12,7 @@ class L298N {
     void left(int speed);
     void right(int speed);
     void stop(int speed);
+    void set(int leftSpeed, int rightSpeed);
 
   private:
     int _in1;

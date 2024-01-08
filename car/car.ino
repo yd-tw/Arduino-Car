@@ -13,7 +13,7 @@
 #define L_ECHO A1
 
 #define SERVO 9
-#define LIGHT 13
+#define LED 13
 
 #define SEE 7
 #define CATCH 8
@@ -51,7 +51,7 @@ void loop() {
       servo.write(135);
       delay(1000);
     } else {
-      revise()
+      revise();
     }
   } else {
     leftDistance = left.distance();

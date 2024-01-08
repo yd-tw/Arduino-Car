@@ -1,11 +1,11 @@
-#ifndef LIMP_h
-#define LIMP_h
+#ifndef LIGHT_h
+#define LIGHT_h
 
 #include "Arduino.h"
 
-class LIMP {
+class LIGHT {
   public:
-    LIMP(int pin);
+    LIGHT(int pin);
     void begin();
     void on();
     void off();
