@@ -1,6 +1,5 @@
-#include "LIMP.h"
-
-LIMP red(13);
+#include "LIGHT.h"
+LIGHT red(13);
 
 void setup()
 {
